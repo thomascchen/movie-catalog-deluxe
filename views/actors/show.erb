@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= actor %></title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/foundation.min.css">
+  </head>
+
+  <body>
+    <h1><%= actor %></h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="200">Movie</th>
+          <th width="200">Role</th>
+        </tr>
+      </thead>
+
+        <tbody>
+          <% actor_info.each do |actor| %>
+          <tr>
+            <td><a href="/movies/<%=actor['movie'] %>"><%= actor['movie'] %></a></td>
+            <td><%= actor['role'] %></td>
+          </tr>
+            <% end %>
+        </tbody>
+      </table>
+
+  </body>
+</html>

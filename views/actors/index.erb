@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Actors</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/foundation.min.css">
+  </head>
+
+  <body>
+    <h1>Actors</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="200">Names</th>
+        </tr>
+      </thead>
+
+        <tbody>
+          <% actors.each do |actor| %>
+          <tr>
+            <td><a href="/actors/<%= actor['name'] %>"><%= actor['name'] %></a></td>
+          </tr>
+            <% end %>
+        </tbody>
+      </table>
+
+  </body>
+</html>

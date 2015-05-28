@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Movies</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/foundation.min.css">
+  </head>
+
+  <body>
+    <h1>Movies</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="200">Movie</th>
+          <th width="200">Year</th>
+          <th width="200">Rating</th>
+          <th width="200">Genre</th>
+          <th width="200">Studio</th>
+        </tr>
+      </thead>
+
+        <tbody>
+          <% movies.each do |movie| %>
+          <tr>
+            <td><a href="/movies/<%= movie['movie'] %>"><%= movie['movie'] %></a></td>
+            <td><%= movie['year'] %></td>
+            <td><%= movie['rating'] %></td>
+            <td><%= movie['genre'] %></td>
+            <td><%= movie['studio'] %></td>
+          </tr>
+            <% end %>
+        </tbody>
+      </table>
+
+  </body>
+</html>

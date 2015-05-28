@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= movie %></title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/foundation.min.css">
+  </head>
+
+  <body>
+    <h1><%= movie %></h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="200">Studio</th>
+          <th width="200">Year</th>
+          <th width="200">Genre</th>
+          <th width="200">Rating</th>
+          <th>Synopsis</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td><%= movie_info[0]['studio'] %></td>
+          <td><%= movie_info[0]['year'] %></td>
+          <td><%= movie_info[0]['genre'] %></td>
+          <td><%= movie_info[0]['rating'] %></td>
+          <td><%= movie_info[0]['synopsis'] %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="200">Movie</th>
+          <th width="200">Role</th>
+        </tr>
+      </thead>
+
+        <tbody>
+          <% movie_info.each do |movie| %>
+          <tr>
+            <td><a href="/actors/<%= movie['actor'] %>"><%= movie['actor'] %></a></td>
+            <td><%= movie['role'] %></td>
+          </tr>
+            <% end %>
+        </tbody>
+      </table>
+
+  </body>
+</html>
