@@ -7,47 +7,61 @@
   </head>
 
   <body>
-    <h1><%= movie %></h1>
 
-    <table>
-      <thead>
-        <tr>
-          <th width="200">Studio</th>
-          <th width="200">Year</th>
-          <th width="200">Genre</th>
-          <th width="200">Rating</th>
-          <th>Synopsis</th>
-        </tr>
-      </thead>
+    <ul class="breadcrumbs">
+      <li><a href="/movies">Movies</a></li>
+      <li><a href="/actors">Actors</a></li>
+    </ul>
 
-      <tbody>
-        <tr>
-          <td><%= movie_info[0]['studio'] %></td>
-          <td><%= movie_info[0]['year'] %></td>
-          <td><%= movie_info[0]['genre'] %></td>
-          <td><%= movie_info[0]['rating'] %></td>
-          <td><%= movie_info[0]['synopsis'] %></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row">
 
-    <table>
-      <thead>
-        <tr>
-          <th width="200">Movie</th>
-          <th width="200">Role</th>
-        </tr>
-      </thead>
+      <div class="small-6 large-centered columns">
 
-        <tbody>
-          <% movie_info.each do |movie| %>
-          <tr>
-            <td><a href="/actors/<%= movie['actor'] %>"><%= movie['actor'] %></a></td>
-            <td><%= movie['role'] %></td>
-          </tr>
-            <% end %>
-        </tbody>
-      </table>
+        <h1><%= movie %></h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Studio</th>
+              <th>Year</th>
+              <th>Genre</th>
+              <th>Rating</th>
+              <th>Synopsis</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><%= movie_info[0]['studio'] %></td>
+              <td><%= movie_info[0]['year'] %></td>
+              <td><%= movie_info[0]['genre'] %></td>
+              <td><%= movie_info[0]['rating'] %></td>
+              <td><%= movie_info[0]['synopsis'] %></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Actor</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% movie_info.each do |movie| %>
+            <tr>
+              <td><a href="/actors/<%= movie['actor'] %>"><%= movie['actor'] %></a></td>
+              <td><%= movie['role'] %></td>
+            </tr>
+              <% end %>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
 
   </body>
 </html>

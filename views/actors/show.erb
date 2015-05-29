@@ -7,25 +7,39 @@
   </head>
 
   <body>
-    <h1><%= actor %></h1>
 
-    <table>
-      <thead>
-        <tr>
-          <th width="200">Movie</th>
-          <th width="200">Role</th>
-        </tr>
-      </thead>
+    <ul class="breadcrumbs">
+      <li><a href="/movies">Movies</a></li>
+      <li><a href="/actors">Actors</a></li>
+    </ul>
 
-        <tbody>
-          <% actor_info.each do |actor| %>
-          <tr>
-            <td><a href="/movies/<%=actor['movie'] %>"><%= actor['movie'] %></a></td>
-            <td><%= actor['role'] %></td>
-          </tr>
+    <div class="row">
+
+      <div class="small-6 large-centered columns">
+
+        <h1><%= actor %></h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th width="200">Movie</th>
+              <th width="200">Role</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% actor_info.each do |actor| %>
+              <tr>
+                <td><a href="/movies/<%=actor['movie'] %>"><%= actor['movie'] %></a></td>
+                <td><%= actor['role'] %></td>
+              </tr>
             <% end %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
 
   </body>
 </html>
