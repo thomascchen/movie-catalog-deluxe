@@ -33,7 +33,7 @@
           <tbody>
             <% movies.each do |movie| %>
               <tr>
-                <td><a href="/movies/<%= movie['movie'] %>"><%= movie['movie'] %></a></td>
+                <td><a href="/movies/<%= movie['id'] %>"><%= movie['movie'] %></a></td>
                 <td><%= movie['year'] %></td>
                 <td><%= movie['rating'] %></td>
                 <td><%= movie['genre'] %></td>

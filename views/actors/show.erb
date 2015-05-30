@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= actor %></title>
+    <title><%= actor[0]['name'] %></title>
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/foundation.min.css">
   </head>
@@ -17,7 +17,7 @@
 
       <div class="small-6 large-centered columns">
 
-        <h1><%= actor %></h1>
+        <h1><%= actor[0]['name'] %></h1>
 
         <table>
           <thead>
@@ -30,7 +30,7 @@
           <tbody>
             <% actor_info.each do |actor| %>
               <tr>
-                <td><a href="/movies/<%=actor['movie'] %>"><%= actor['movie'] %></a></td>
+                <td><a href="/movies/<%=actor['movie_id'] %>"><%= actor['movie'] %></a></td>
                 <td><%= actor['role'] %></td>
               </tr>
             <% end %>
