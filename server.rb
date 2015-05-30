@@ -11,8 +11,16 @@ def db_connection
   end
 end
 
-def actors
-  db_connection { |conn| conn.exec("SELECT id, name FROM actors ORDER BY name")}
+def actors_page(page, order)
+  if page.to_i > 0
+    offset = (page.to_i - 1) * 20
+  else
+    offset = 0
+  end
+
+  sql = "SELECT id, name FROM actors ORDER BY name LIMIT 20 OFFSET #{offset}"
+
+  db_connection { |conn| conn.exec(sql)}
 end
 
 def actor
@@ -32,18 +40,22 @@ def actor_info
   end
 end
 
-def movies_sort(option)
+def movies_page(page, order)
+  if page.to_i > 0
+    offset = (page.to_i - 1) * 20
+  else
+    offset = 0
+  end
+
   sql = "SELECT movies.id AS id, movies.title AS title,
     movies.year AS year, movies.rating AS rating,
     genres.name AS genre, studios.name AS studio
     FROM movies
     LEFT JOIN genres ON movies.genre_id = genres.id
     LEFT JOIN studios ON movies.studio_id = studios.id
-    ORDER BY #{option}"
+    ORDER BY #{order} LIMIT 20 OFFSET #{offset}"
 
-  db_connection do |conn|
-    conn.exec_params(sql)
-  end
+  db_connection { |conn| conn.exec(sql) }
 end
 
 def movie
@@ -72,7 +84,21 @@ get '/' do
 end
 
 get '/actors' do
-  erb :'actors/index', locals: { actors: actors }
+  if params[:order] == nil
+    order = 'title'
+  else
+    order = params[:order]
+  end
+
+  if params[:page] == nil
+    page = 1
+  else
+    page = params[:page]
+  end
+
+  actors = actors_page(page, order)
+
+  erb :'actors/index', locals: { actors: actors, page: page, order: order }
 end
 
 get '/actors/:id' do
@@ -81,13 +107,20 @@ end
 
 get '/movies' do
   if params[:order] == nil
-    params[:order] = 'title'
-    movies = movies_sort(params[:order])
+    order = 'title'
   else
-    movies = movies_sort(params[:order])
+    order = params[:order]
   end
 
-  erb :'movies/index', locals: { movies: movies }
+  if params[:page] == nil
+    page = 1
+  else
+    page = params[:page]
+  end
+
+  movies = movies_page(page, order)
+
+  erb :'movies/index', locals: { movies: movies, page: page, order: order }
 end
 
 get '/movies/:id' do

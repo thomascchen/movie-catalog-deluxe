@@ -9,8 +9,14 @@
   <body>
 
     <ul class="breadcrumbs">
-      <li><a href="/movies">Movies</a></li>
+      <li><a href="/movies">Movies By Title</a></li>
+      <li><a href="/movies?order=year">Movies By Year</a></li>
+      <li><a href="/movies?order=rating">Movies By Rating</a></li>
+      <li><a href="/movies?order=genre">Movies By Genre</a></li>
+      <li><a href="/movies?order=studio">Movies By Studio</a></li>
       <li><a href="/actors">Actors</a></li>
+      <li><a href="/actors?page=<%= params[:page].to_i - 1 %>">Previous Page</a></li>
+      <li><a href="/actors?page=<%= params[:page].to_i + 1 %>">Next Page</a></li>
     </ul>
 
     <div class="row">
