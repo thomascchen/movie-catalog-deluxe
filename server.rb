@@ -58,6 +58,17 @@ def movies_page(page, order)
   db_connection { |conn| conn.exec(sql) }
 end
 
+def movies_search(query)
+  sql = "SELECT movies.id AS id, movies.title AS title, movies.year AS year,
+    movies.rating AS rating, genres.name AS genre, studios.name AS studio
+    FROM movies
+    LEFT JOIN genres ON movies.genre_id = genres.id
+    LEFT JOIN studios ON movies.studio_id = studios.id
+    WHERE title ILIKE '%#{query}%' OR synopsis ILIKE '%#{query}%'"
+
+  db_connection { |conn| conn.exec(sql) }
+end
+
 def movie
   db_connection do |conn|
     conn.exec("SELECT id, title FROM movies WHERE id = $1", [params[:id]])
@@ -106,6 +117,7 @@ get '/actors/:id' do
 end
 
 get '/movies' do
+
   if params[:order] == nil
     order = 'title'
   else
@@ -119,6 +131,10 @@ get '/movies' do
   end
 
   movies = movies_page(page, order)
+
+  if params[:query] != nil
+    movies = movies_search(params[:query])
+  end
 
   erb :'movies/index', locals: { movies: movies, page: page, order: order }
 end
