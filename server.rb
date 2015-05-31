@@ -132,8 +132,10 @@ get '/movies' do
 
   movies = movies_page(page, order)
 
-  if params[:query] != nil
-    movies = movies_search(params[:query])
+  query = params[:query]
+
+  if query != nil
+    movies = movies_search(query)
   end
 
   erb :'movies/index', locals: { movies: movies, page: page, order: order }
