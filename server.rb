@@ -12,23 +12,27 @@ def db_connection
 end
 
 def actors_page(page, order)
-  if page.to_i > 0
-    offset = (page.to_i - 1) * 20
+  if page.to_i >= 1
+    offset = (page.to_i) * 20
   else
     offset = 0
   end
 
-  sql = "SELECT id, name FROM actors ORDER BY name LIMIT 20 OFFSET #{offset}"
+  sql = "SELECT actors.id AS id, actors.name AS name, COUNT(cast_members.movie_id)
+    FROM actors
+    JOIN cast_members ON actors.id = cast_members.actor_id
+    GROUP BY actors.id
+    ORDER BY name LIMIT 20 OFFSET #{offset}"
 
   db_connection { |conn| conn.exec(sql)}
 end
 
 def actors_search(query)
-  sql = "SELECT actors.id AS id, actors.name AS name,
-    cast_members.character AS role
+  sql = "SELECT actors.id AS id, actors.name AS name, COUNT(cast_members.movie_id)
     FROM actors
     LEFT JOIN cast_members ON actors.id = cast_members.actor_id
     WHERE name ILIKE '%#{query}%' OR cast_members.character ILIKE '%#{query}%'
+    GROUP BY actors.id
     ORDER BY name"
 
   db_connection { |conn| conn.exec(sql) }
@@ -56,7 +60,7 @@ def movies_page(page, order)
   if page.to_i > 0
     offset = (page.to_i - 1) * 20
   else
-    offset = 0
+    offset = 1
   end
 
   sql = "SELECT movies.id AS id, movies.title AS title,
@@ -114,7 +118,7 @@ get '/actors' do
   end
 
   if params[:page] == nil
-    page = 1
+    page = 0
   else
     page = params[:page]
   end
@@ -155,7 +159,7 @@ get '/movies' do
   end
 
   if params[:page] == nil
-    page = 1
+    page = 0
   else
     page = params[:page]
   end

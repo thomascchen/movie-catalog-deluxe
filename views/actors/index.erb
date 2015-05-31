@@ -36,7 +36,8 @@
         <table>
           <thead>
             <tr>
-              <th width="200">Names</th>
+              <th width>Names</th>
+              <th width>Number of Movies</th>
             </tr>
           </thead>
 
@@ -44,6 +45,7 @@
             <% actors.each do |actor| %>
               <tr>
                 <td><a href="/actors/<%= actor['id'] %>"><%= actor['name'] %></a></td>
+                <td><%= actor['count'] %></td>
               </tr>
             <% end %>
           </tbody>
