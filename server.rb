@@ -23,6 +23,17 @@ def actors_page(page, order)
   db_connection { |conn| conn.exec(sql)}
 end
 
+def actors_search(query)
+  sql = "SELECT actors.id AS id, actors.name AS name,
+    cast_members.character AS role
+    FROM actors
+    LEFT JOIN cast_members ON actors.id = cast_members.actor_id
+    WHERE name ILIKE '%#{query}%' OR cast_members.character ILIKE '%#{query}%'
+    ORDER BY name"
+
+  db_connection { |conn| conn.exec(sql) }
+end
+
 def actor
   db_connection do |conn|
     conn.exec("SELECT name FROM actors WHERE id = $1", [params[:id]])
@@ -38,6 +49,7 @@ def actor_info
       JOIN actors ON cast_members.actor_id = actors.id
       WHERE actors.id = $1", [params[:id]])
   end
+
 end
 
 def movies_page(page, order)
@@ -109,10 +121,28 @@ get '/actors' do
 
   actors = actors_page(page, order)
 
+  query = params[:query]
+
+  if query != nil
+    unique_actors = []
+
+    actors_search(query).to_a.each do |actor|
+      unique_actors << actor
+    end
+
+    actors = unique_actors.uniq { |actor| [actor['id']] }
+  end
+
   erb :'actors/index', locals: { actors: actors, page: page, order: order }
 end
 
 get '/actors/:id' do
+  query = params[:query]
+
+  if query != nil
+    redirect "/actors?query=#{query}"
+  end
+
   erb :'actors/show', locals: { actor: actor, actor_info: actor_info }
 end
 
@@ -142,5 +172,11 @@ get '/movies' do
 end
 
 get '/movies/:id' do
+  query = params[:query]
+
+  if query != nil
+    redirect "/movies?query=#{query}"
+  end
+
   erb :'movies/show', locals: { movie: movie, movie_info: movie_info }
 end
